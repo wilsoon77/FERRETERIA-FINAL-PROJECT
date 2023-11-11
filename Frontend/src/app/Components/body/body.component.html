@@ -1,0 +1,144 @@
+<!-- Google Web Fonts -->
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"> 
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<app-header></app-header>
+<br>
+<br>
+<br>
+<form class="row g-3 align-items-center">
+    <div class="col-lg-2 text-center text-lg-start">
+        <label for="palabraClave" class="form-label">Filtrar:</label>
+    </div>
+    <div class="col-lg-4 mb-2">
+        <input type="text" [(ngModel)]="busqueda" name="busqueda" class="form-control" id="palabraClave" placeholder="Ingrese la palabra a buscar" style="margin-right: 10px;">
+    </div>
+    <div class="col-lg-4">
+        <div class="d-grid gap-2 d-lg-flex justify-content-lg-end">
+            <button type="button" class="btn btn-primary mb-3" (click)="realizarBusqueda()">Buscar</button>
+            <button type="button" class="btn btn-dark mb-3" (click)="LimpiarBusqueda()">Limpiar</button>
+            <button type="button" class="btn btn-success mb-3" (click)="generatePDF()">Exportar a PDF</button>
+        </div>
+    </div>
+</form>
+
+
+<button pButton type="button" label="Crear Producto" class="p-button-raised guardar-button p-m-2" (click)="mostrarDialogoCreacion()"></button>
+
+
+
+<p-dialog header="Crear Producto" [(visible)]="displayCreacion">
+    <form action="" [formGroup]="formularioProducto">
+        <div class="p-inputgroup p-m-2">
+            <span class="p-inputgroup-addon">
+                <i class="pi pi-key"></i>
+            </span>
+            <input type="text" pInputText placeholder="Código de Producto" formControlName="idProducto">
+        </div>
+
+        <div class="p-inputgroup p-m-2">
+            <span class="p-inputgroup-addon">
+                <i class="pi pi-bars"></i>
+            </span>
+            <input type="text" pInputText placeholder="Nombre Del Producto" formControlName="nombre">
+        </div>
+
+        <div class="p-inputgroup p-m-2">
+            <span class="p-inputgroup-addon">
+                <i class="pi pi-money-bill"></i>
+            </span>
+            <input type="text" pInputText placeholder="Precio" formControlName="precio">
+        </div>
+
+        <div class="p-inputgroup p-m-2">
+            <span class="p-inputgroup-addon">
+                <i class="pi pi-slack"></i>
+            </span>
+            <input type="text" pInputText placeholder="Cantidad" formControlName="cantidad">
+        </div>
+
+        <div class="p-inputgroup p-m-2">
+            <span class="p-inputgroup-addon">
+                <i class="pi pi-truck"></i>
+            </span>
+            <input type="text" pInputText placeholder="Marca" formControlName="marca">
+        </div>
+
+        <div style="text-align: center;">
+            <button pButton type="button" class="p-button-raised" label="Guardar" (click)="crearProducto()"></button>
+            <button pButton type="button" class="p-button-raised" label="Cancelar" (click)="displayCreacion = false"></button>
+        </div>
+    </form>
+</p-dialog>
+
+<!-- Agrega esta sección donde deseas mostrar el mensaje -->
+<div *ngIf="productoAgregado" class="alert alert-success" role="alert">
+    Producto añadido al carrito.
+  </div>
+<p-table [value]="productos" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Codigo</th>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Marca</th>
+            <th>EDITAR</th>
+            <th>ELIMINAR</th>
+            <th>COMPRAR</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-producto>
+        <tr>
+            <td>{{producto.idProducto}}</td>
+            <td>{{producto.nombre}}</td>
+            <td>{{producto.precio}}</td>
+            <td>{{producto.cantidad}}</td>
+            <td>{{producto.marca}}</td>
+            <td><p-button icon="pi pi-file-edit" [rounded]="true" [text]="true" [raised]="true" severity="success" (click)="activador(producto)"></p-button></td>
+            <td><p-button icon="pi pi-trash" [rounded]="true" [text]="true" [raised]="true" severity="danger " (onClick)="eliminarProducto(producto.idProducto)"></p-button></td>
+            <td><p-button label="Añadir al carrito" icon="pi pi-cart-plus" [rounded]="true" [text]="true" [raised]="true" severity="help" (click)="agregarAlCarrito(producto)"></p-button></td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<p-dialog header="Modificar Producto" [(visible)]="display">
+    <form action="" [formGroup]="formularioProducto">
+        <div class="p-inputgroup p-m-2">
+            <span class="p-inputgroup-addon">
+                <i class="pi pi-bars"></i>
+            </span>
+            <input type="text" pInputText placeholder="Nombre Del Producto" formControlName="nombre">
+        </div>
+
+        <div class="p-inputgroup p-m-2">
+            <span class="p-inputgroup-addon">
+                <i class="pi pi-money-bill"></i>
+            </span>
+            <input type="text" pInputText placeholder="Precio" formControlName="precio">
+        </div>
+
+        <div class="p-inputgroup p-m-2">
+            <span class="p-inputgroup-addon">
+                <i class="pi pi-slack"></i>
+            </span>
+            <input type="text" pInputText placeholder="Cantidad" formControlName="cantidad">
+        </div>
+
+        <div class="p-inputgroup p-m-2">
+            <span class="p-inputgroup-addon">
+                <i class="pi pi-truck"></i>
+            </span>
+            <input type="text" pInputText placeholder="Marca" formControlName="marca">
+        </div>
+
+        <div style="text-align: center;">
+            <button pButton type="button" class="p-button-raised" label="Modificar" (click)="actualizarProducto()"></button>
+        </div>
+    </form>
+</p-dialog>
+
+<app-footer></app-footer>

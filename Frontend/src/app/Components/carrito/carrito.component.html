@@ -1,0 +1,52 @@
+<!-- Google Web Fonts -->
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"> 
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
+<app-header></app-header>
+<br>
+<br><br>
+<div *ngIf="compraRealizada" class="alert alert-success" role="alert">
+  Compra realizada con éxito. Redireccionando a la página de inicio...
+</div>
+
+<div class="datos-cliente">
+  <label for="nombre">Nombre:</label>
+  <input type="text" id="nombre" [(ngModel)]="nombreCliente" placeholder="Nombre del cliente">
+
+  <label for="direccion">Dirección:</label>
+  <input type="text" id="direccion" [(ngModel)]="direccionCliente" placeholder="Dirección del cliente">
+
+  <label for="fechaEmision">Fecha de Emisión:</label>
+  <input type="date" id="fechaEmision" [(ngModel)]="fechaEmision">
+</div>
+
+
+<div class="carrito">
+  <h2>Carrito de Compras</h2> <br>
+  <ul class="lista-productos">
+    <li *ngFor="let carritoItem of productosEnCarrito">
+      <div class="producto-info">
+        <h3>{{carritoItem.producto.nombre}}</h3>
+        <p>Precio: Q{{carritoItem.producto.precio}}</p>
+        <p>Cantidad: {{carritoItem.cantidad}}</p>
+      </div>
+      <div class="acciones">
+        <button (click)="eliminarDelCarrito(carritoItem.producto.idProducto)">Eliminar</button>
+      </div>
+    </li>
+  </ul>
+  <div class="total">
+    <p>Total: Q{{calcularTotal()}}</p>
+  </div>
+
+  <!-- Nuevos campos para nombre, dirección y fecha de emisión -->
+ 
+
+  <div class="acciones">
+    <button (click)="terminarCompra()">Terminar Compra</button>
+  </div>
+</div>

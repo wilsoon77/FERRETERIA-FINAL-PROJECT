@@ -1,0 +1,47 @@
+.carrito {
+    border: 1px solid #ccc;
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+  
+  .lista-productos {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .producto-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .producto-info img {
+    width: 80px;
+    height: 80px;
+    margin-right: 10px;
+  }
+  
+  .acciones button {
+    background-color: #ff4444;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .total {
+    text-align: right;
+    margin-top: 10px;
+  }
+  
+  .datos-cliente {
+    margin-top: 20px;
+  }
+  
+  .datos-cliente label {
+    margin-right: 10px;
+  }
+  
+  .datos-cliente input {
+    margin-bottom: 10px;
+  }
+  
